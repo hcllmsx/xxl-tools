@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 脚本版本号
-VERSION="v0.0.2"
+VERSION="v0.0.3"
 
 # 加载模块函数
 function load_module() {
@@ -29,7 +29,7 @@ function self_install() {
 
     # 下载脚本并保存到系统路径
     echo "正在安装脚本到系统路径..."
-    curl -s -o "$install_path" "https://raw.githubusercontent.com/hcllmsx/xxl-tools/main/xxl-tools.sh"
+    curl -sL -o "$install_path" "https://raw.githubusercontent.com/hcllmsx/xxl-tools/main/xxl-tools.sh"
     if [[ $? -ne 0 ]]; then
         echo "下载脚本失败，请检查网络连接。"
         exit 1
