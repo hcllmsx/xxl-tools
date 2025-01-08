@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 脚本版本号
-VERSION="v0.0.4"
+VERSION="v0.0.6"
 
 # 加载模块函数
 function load_module() {
