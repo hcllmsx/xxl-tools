@@ -19,5 +19,5 @@ bash <(curl -s https://raw.githubusercontent.com/hcllmsx/xxl-tools/main/xxl-tool
 ```
 
 ## 我摊牌了
-我是小白一个，所以本仓库里的内容是全部是AI生成的脚本，人工干预的并不多，所以你们不要使用！不要使用！不要使用！
 
+我是小白一个，所以本仓库里的内容是全部是AI生成的脚本，人工干预的并不多，所以你们不要使用！不要使用！不要使用！

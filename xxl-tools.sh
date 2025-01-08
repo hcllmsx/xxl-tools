@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# 脚本版本号
+VERSION="v0.0.2"
+
 # 加载模块函数
 function load_module() {
     local module_name=$1
@@ -47,10 +50,10 @@ function main_menu() {
     clear
     echo "===================================="
     echo "          XXL Tools 菜单            "
+    echo "               $VERSION              "
     echo "===================================="
     echo "1. 开启root用户使用密钥登录"
-    echo "2. 新功能示例"
-    echo "3. 退出"
+    echo "2. 退出"
     echo "===================================="
     read -p "请输入选项编号: " choice
 
@@ -60,10 +63,6 @@ function main_menu() {
             confirm_enable_root_ssh_key
             ;;
         2)
-            load_module "new_feature1"
-            new_feature1
-            ;;
-        3)
             echo "退出脚本。"
             exit 0
             ;;
