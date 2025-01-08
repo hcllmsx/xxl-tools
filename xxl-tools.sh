@@ -75,10 +75,10 @@ function main_menu() {
 }
 
 # 检查是否通过 curl 直接运行
-if [[ "$0" == "bash" ]]; then
+if [[ -t 0 ]]; then
+    # 如果是通过终端直接运行，则执行主菜单
+    main_menu
+else
     # 如果是通过 curl 直接运行，则执行自安装
     self_install
-else
-    # 如果已经安装，则直接运行主菜单
-    main_menu
 fi
