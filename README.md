@@ -15,7 +15,7 @@ XXL-Tools 是一个用于管理 Ubuntu 系统的工具脚本集合，采用模�
 你可以直接通过以下命令运行脚本：
 
 ```bash
-bash <(curl -s https://raw.githubusercontent.com/hcllmsx/xxl-tools/main/xxl-tools.sh)
+bash <(curl -sL https://raw.githubusercontent.com/hcllmsx/xxl-tools/main/xxl-tools.sh)
 ```
 
 ## 我摊牌了
