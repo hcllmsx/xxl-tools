@@ -6,6 +6,7 @@ INSTALL_DIR="/usr/local/bin/xxl-tools"
 # 检查是否已经安装
 if [[ -d "$INSTALL_DIR" ]]; then
     echo "脚本已安装，可以直接通过 'xxlt' 命令运行。"
+    "$INSTALL_DIR/scripts/xxl-tools.sh"
     exit 0
 fi
 
@@ -25,12 +26,22 @@ if [[ $? -ne 0 ]]; then
     exit 1
 fi
 
+# 赋予脚本执行权限
+chmod +x "$INSTALL_DIR/scripts/xxl-tools.sh"
+if [[ $? -ne 0 ]]; then
+    echo "赋予执行权限失败，请检查权限设置。"
+    exit 1
+fi
+
 # 创建软链接
 echo "正在创建软链接..."
-ln -s "$INSTALL_DIR/scripts/xxl-tools.sh" /usr/local/bin/xxlt
+ln -sf "$INSTALL_DIR/scripts/xxl-tools.sh" /usr/local/bin/xxlt
 if [[ $? -ne 0 ]]; then
     echo "创建软链接失败，请检查权限设置。"
     exit 1
 fi
 
 echo "安装成功！现在可以通过 'xxlt' 命令运行脚本。"
+
+# 直接运行脚本
+"$INSTALL_DIR/scripts/xxl-tools.sh"

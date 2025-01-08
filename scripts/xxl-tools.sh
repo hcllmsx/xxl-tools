@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 脚本版本号
-VERSION="v0.0.4"
+VERSION="v0.0.5"
 
 # 加载模块函数
 function load_module() {
@@ -16,6 +16,20 @@ function load_module() {
     fi
 }
 
+# 更新脚本函数
+function update_script() {
+    echo "正在更新脚本..."
+    curl -sL -o /tmp/xxl-tools.sh https://raw.githubusercontent.com/hcllmsx/xxl-tools/main/scripts/xxl-tools.sh
+    if [[ $? -ne 0 ]]; then
+        echo "下载脚本失败，请检查网络连接。"
+        return
+    fi
+
+    mv /tmp/xxl-tools.sh "$INSTALL_DIR/scripts/xxl-tools.sh"
+    chmod +x "$INSTALL_DIR/scripts/xxl-tools.sh"
+    echo "脚本更新成功！"
+}
+
 # 主菜单函数
 function main_menu() {
     clear
@@ -23,19 +37,28 @@ function main_menu() {
     echo "          XXL Tools 菜单            "
     echo "               $VERSION              "
     echo "===================================="
-    echo "1. 开启root用户使用密钥登录"
-    echo "2. 退出"
+    echo "0. 退出"
+    echo "1. 更新脚本"
+    echo ""
+    echo "------------------------------------"
+    echo ""
+    echo "2. 开启root用户使用密钥登录"
     echo "===================================="
     read -p "请输入选项编号: " choice
 
     case $choice in
-        1)
-            load_module "enable_root_ssh"
-            confirm_enable_root_ssh_key
-            ;;
-        2)
+        0)
             echo "退出脚本。"
             exit 0
+            ;;
+        1)
+            update_script
+            read -p "按回车键返回主菜单..."
+            main_menu
+            ;;
+        2)
+            load_module "enable_root_ssh"
+            confirm_enable_root_ssh_key
             ;;
         *)
             echo "无效的选项，请重新输入！"
