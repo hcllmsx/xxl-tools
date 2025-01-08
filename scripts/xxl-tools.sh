@@ -1,12 +1,12 @@
 #!/bin/bash
 
 # 脚本版本号
-VERSION="v0.0.5"
+VERSION="v0.0.4"
 
 # 加载模块函数
 function load_module() {
     local module_name=$1
-    local module_path="./modules/$module_name.sh"
+    local module_path="$(dirname "$0")/modules/$module_name.sh"
 
     if [[ -f "$module_path" ]]; then
         source "$module_path"
@@ -25,8 +25,8 @@ function update_script() {
         return
     fi
 
-    mv /tmp/xxl-tools.sh "$INSTALL_DIR/scripts/xxl-tools.sh"
-    chmod +x "$INSTALL_DIR/scripts/xxl-tools.sh"
+    mv /tmp/xxl-tools.sh "$(dirname "$0")/xxl-tools.sh"
+    chmod +x "$(dirname "$0")/xxl-tools.sh"
     echo "脚本更新成功！"
 }
 
