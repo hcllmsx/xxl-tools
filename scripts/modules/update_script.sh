@@ -11,7 +11,9 @@ function update_script() {
 
     # 使用 sudo 移动文件并修改权限
     if sudo mv /tmp/xxl-tools.sh "$INSTALL_DIR/scripts/xxl-tools.sh" && sudo chmod +x "$INSTALL_DIR/scripts/xxl-tools.sh"; then
-        echo "脚本更新成功！正在重启脚本..."
+        echo "脚本更新成功！"
+        echo "脚本将在 5 秒后重启..."
+        sleep 5
         # 重启脚本
         exec "$INSTALL_DIR/scripts/xxl-tools.sh"
     else
