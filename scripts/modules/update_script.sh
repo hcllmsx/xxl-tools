@@ -16,7 +16,8 @@ function update_script() {
         fi
     else
         # 如果已经是git仓库，则拉取最新更改
-        git pull origin main
+        git fetch --all
+        git reset --hard origin/main
         if [[ $? -ne 0 ]]; then
             echo "拉取最新更改失败，请检查网络连接。"
             return
