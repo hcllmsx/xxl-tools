@@ -1,12 +1,15 @@
 #!/bin/bash
 
 # 脚本版本号
-VERSION="v0.0.7"
+VERSION="v0.0.8"
+
+# 安装路径
+INSTALL_DIR="/usr/local/bin/xxl-tools"
 
 # 加载模块函数
 function load_module() {
     local module_name=$1
-    local module_path="$(dirname "$0")/modules/$module_name.sh"
+    local module_path="$INSTALL_DIR/scripts/modules/$module_name.sh"
 
     if [[ -f "$module_path" ]]; then
         source "$module_path"
@@ -14,21 +17,6 @@ function load_module() {
         echo "模块 '$module_name' 未找到！"
         exit 1
     fi
-}
-
-# 更新脚本函数
-function update_script() {
-    echo "正在更新脚本..."
-    curl -sL -o /tmp/xxl-tools.sh https://raw.githubusercontent.com/hcllmsx/xxl-tools/main/scripts/xxl-tools.sh
-    if [[ $? -ne 0 ]]; then
-        echo "下载脚本失败，请检查网络连接。"
-        return
-    fi
-
-    mv /tmp/xxl-tools.sh "$(dirname "$0")/xxl-tools.sh"
-    chmod +x "$(dirname "$0")/xxl-tools.sh"
-    echo "脚本更新成功！"
-    main_menu
 }
 
 # 主菜单函数
@@ -53,6 +41,7 @@ function main_menu() {
             exit 0
             ;;
         1)
+            load_module "update_script"
             update_script
             read -p "按回车键返回主菜单..."
             main_menu
