@@ -24,7 +24,7 @@ function confirm_enable_root_ssh_key() {
                 ;;
             2)
                 echo ""
-                echo "旧密钥将作废，且重新生成密钥。"
+                echo -e "\e[33m旧密钥将作废，且重新生成密钥。\e[0m"
                 echo ""
                 sleep 2
                 ;;
@@ -56,12 +56,12 @@ function confirm_enable_root_ssh_key() {
         echo "启用root用户通过SSH密钥登录，并禁用密码登录..."
         sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin prohibit-password/' /etc/ssh/sshd_config
         sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
-        # 重启SSH服务
-        systemctl restart ssh
     else
         echo "SSH配置已生效，无需重复设置。"
     fi
-
+    
+    # 重启SSH服务
+    systemctl restart ssh
     # 获取当前用户名
     username=$(whoami)
 
@@ -84,7 +84,9 @@ function confirm_enable_root_ssh_key() {
     cat /root/.ssh/id_rsa
     echo ""
     echo "密钥只显示一次，需要手动复制上面的密钥内容，并保存成以下文件："
-    echo "$key_filename"
+    echo -e "\e[32m$key_filename\e[0m"
+    echo ""
+    echo "请将 $key_filename 文件保存到安全的地方，不要上传到互联网。"
     echo ""
     read -p "按回车键返回上一级菜单..."
     key_management_menu
