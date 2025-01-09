@@ -3,20 +3,30 @@
 # 更新脚本函数
 function update_script() {
     echo "正在更新脚本..."
-    curl -sL -o /tmp/xxl-tools.sh https://raw.githubusercontent.com/hcllmsx/xxl-tools/main/scripts/xxl-tools.sh
-    if [[ $? -ne 0 ]]; then
-        echo "下载脚本失败，请检查网络连接。"
-        return
-    fi
-
-    # 使用 sudo 移动文件并修改权限
-    if sudo mv /tmp/xxl-tools.sh "$INSTALL_DIR/scripts/xxl-tools.sh" && sudo chmod +x "$INSTALL_DIR/scripts/xxl-tools.sh"; then
-        echo "脚本更新成功！"
-        echo "脚本将在 5 秒后重启..."
-        sleep 5
-        # 重启脚本
-        exec "$INSTALL_DIR/scripts/xxl-tools.sh"
+    
+    # 进入安装目录
+    cd "$INSTALL_DIR" || { echo "无法进入安装目录。"; return; }
+    
+    # 如果当前目录不是git仓库，则克隆整个仓库
+    if [ ! -d ".git" ]; then
+        git clone https://github.com/hcllmsx/xxl-tools.git .
+        if [[ $? -ne 0 ]]; then
+            echo "更新失败，请检查网络连接，或者使用root用户执行。"
+            return
+        fi
     else
-        echo "脚本更新失败，请检查权限设置。"
+        # 如果已经是git仓库，则拉取最新更改
+        git pull origin main
+        if [[ $? -ne 0 ]]; then
+            echo "拉取最新更改失败，请检查网络连接。"
+            return
+        fi
     fi
+    
+    echo "脚本更新成功！"
+    echo "脚本将在 3 秒后重启..."
+    sleep 3
+    
+    # 重启脚本
+    exec "$INSTALL_DIR/scripts/xxl-tools.sh"
 }
