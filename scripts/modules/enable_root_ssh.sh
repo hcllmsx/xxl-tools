@@ -6,37 +6,33 @@ function confirm_enable_root_ssh_key() {
     echo "===================================="
     echo "      开启root用户使用密钥登录      "
     echo "===================================="
-    echo "此操作将执行以下步骤："
-    echo "1. 生成SSH密钥对。"
-    echo "2. 配置SSH以禁用密码登录，仅允许密钥登录。"
-    echo "3. 重启SSH服务。"
-    echo "===================================="
-    read -p "你确定要继续吗？(y/n): " confirm
 
-    case $confirm in
-        y|Y)
-            enable_root_ssh_key
-            ;;
-        n|N)
-            echo "操作已取消。"
-            sleep 1
-            main_menu
-            ;;
-        *)
-            echo "无效的输入，请重新选择！"
-            sleep 1
-            confirm_enable_root_ssh_key
-            ;;
-    esac
-}
+    # 检查是否已经存在公钥
+    if [[ -f ~/.ssh/authorized_keys ]]; then
+        echo "root用户已经存在公钥。"
+        echo "1. 取消操作"
+        echo "2. 重新生成密钥"
+        echo "===================================="
+        read -p "请输入选项编号: " choice
 
-# 开启root用户使用密钥登录的功能
-function enable_root_ssh_key() {
-    echo "正在开启root用户使用密钥登录..."
-    # 切换到root用户
-    if [ "$EUID" -ne 0 ]; then
-        echo "请以root用户运行此功能"
-        return
+        case $choice in
+            1)
+                echo "操作已取消。"
+                key_management_menu
+                ;;
+            2)
+                echo "旧密钥将作废，且重新生成密钥。"
+                read -p "你确定要继续吗？(y/n): " confirm
+                if [[ "$confirm" != "y" && "$confirm" != "Y" ]]; then
+                    echo "操作已取消。"
+                    key_management_menu
+                fi
+                ;;
+            *)
+                echo "无效的选项，操作已取消。"
+                key_management_menu
+                ;;
+        esac
     fi
 
     # 生成SSH密钥对
@@ -67,7 +63,7 @@ function enable_root_ssh_key() {
     echo "以下是你的私钥内容，请妥善保存："
     cat /root/.ssh/id_rsa
 
-    echo "操作已完成。"
-    read -p "按回车键返回主菜单..."
-    main_menu
+    echo "密钥只显示一次，需要手动复制上面的密钥内容，并保存成 id_rsa 文件。"
+    read -p "按回车键返回上一级菜单..."
+    key_management_menu
 }

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 脚本版本号
-VERSION="v0.0.8"
+VERSION="v0.0.9"
 
 # 安装路径
 INSTALL_DIR="/usr/local/bin/xxl-tools"
@@ -30,7 +30,7 @@ function main_menu() {
     echo "1. 更新脚本"
     echo "------------------------------------"
     echo ""
-    echo "2. 开启root用户使用密钥登录"
+    echo "2. 密钥登录管理"
     echo ""
     echo "===================================="
     read -p "请输入选项编号: " choice
@@ -47,8 +47,8 @@ function main_menu() {
             main_menu
             ;;
         2)
-            load_module "enable_root_ssh"
-            confirm_enable_root_ssh_key
+            load_module "key_management"
+            key_management_menu
             ;;
         *)
             echo "无效的选项，请重新输入！"
