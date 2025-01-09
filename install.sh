@@ -7,7 +7,7 @@ INSTALL_DIR="/usr/local/bin/xxl-tools"
 echo "正在创建安装目录..."
 mkdir -p "$INSTALL_DIR"
 if [[ $? -ne 0 ]]; then
-    echo "创建目录失败，请检查权限设置。"
+    echo "创建目录失败，请切换至root用户下操作。"
     exit 1
 fi
 
@@ -22,7 +22,7 @@ fi
 # 赋予脚本执行权限
 chmod +x "$INSTALL_DIR/scripts/xxl-tools.sh"
 if [[ $? -ne 0 ]]; then
-    echo "赋予执行权限失败，请检查权限设置。"
+    echo "赋予执行权限失败，请切换至root用户下操作。"
     exit 1
 fi
 
@@ -30,7 +30,7 @@ fi
 echo "正在创建软链接..."
 ln -sf "$INSTALL_DIR/scripts/xxl-tools.sh" /usr/local/bin/xxlt
 if [[ $? -ne 0 ]]; then
-    echo "创建软链接失败，请检查权限设置。"
+    echo "创建软链接失败，请切换至root用户下操作。"
     exit 1
 fi
 
