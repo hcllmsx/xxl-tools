@@ -9,7 +9,9 @@ function confirm_enable_root_ssh_key() {
 
     # 检查是否已经存在公钥
     if [[ -f ~/.ssh/authorized_keys ]]; then
-        echo "root用户已经存在公钥。"
+        echo ""
+        echo -e "\e[32mroot用户已经存在公钥。\e[0m"
+        echo ""
         echo "1. 取消操作"
         echo "2. 重新生成密钥"
         echo "===================================="
@@ -21,12 +23,10 @@ function confirm_enable_root_ssh_key() {
                 key_management_menu
                 ;;
             2)
+                echo ""
                 echo "旧密钥将作废，且重新生成密钥。"
-                read -p "你确定要继续吗？(y/n): " confirm
-                if [[ "$confirm" != "y" && "$confirm" != "Y" ]]; then
-                    echo "操作已取消。"
-                    key_management_menu
-                fi
+                echo ""
+                sleep 2
                 ;;
             *)
                 echo "无效的选项，操作已取消。"
