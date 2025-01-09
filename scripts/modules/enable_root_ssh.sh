@@ -81,12 +81,13 @@ function confirm_enable_root_ssh_key() {
     echo ""
     echo "以下是你的私钥内容，请妥善保存："
     echo ""
-    cat /root/.ssh/id_rsa
+    echo -e "\e[32m$(cat /root/.ssh/id_rsa)\e[0m"
     echo ""
     echo "密钥只显示一次，需要手动复制上面的密钥内容，并保存成以下文件："
-    echo -e "\e[32m$key_filename\e[0m"
     echo ""
-    echo "请将 $key_filename 文件保存到安全的地方，不要上传到互联网。"
+    echo "$key_filename"
+    echo ""
+    echo "请将密钥保存到安全的地方，不要上传到互联网。"
     echo ""
     read -p "按回车键返回上一级菜单..."
     key_management_menu
