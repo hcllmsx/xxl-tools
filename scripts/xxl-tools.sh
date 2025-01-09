@@ -41,7 +41,7 @@ function main_menu() {
             exit 0
             ;;
         1)
-            load_module "update_script"
+            load_module "update_xxlt"
             update_script
             read -p "按回车键返回主菜单..."
             main_menu

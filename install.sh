@@ -34,7 +34,8 @@ if [[ $? -ne 0 ]]; then
     exit 1
 fi
 
-echo "安装成功！现在可以通过 'xxlt' 命令运行脚本。"
+echo "安装成功！"
+echo -e "你以后可以通过 \e[32mxxlt\e[0m 命令运行脚本。"
 
 # 直接运行脚本
 "$INSTALL_DIR/scripts/xxl-tools.sh"
