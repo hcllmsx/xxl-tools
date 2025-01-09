@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 脚本版本号
-VERSION="v0.0.6"
+VERSION="v0.0.7"
 
 # 加载模块函数
 function load_module() {
@@ -28,6 +28,7 @@ function update_script() {
     mv /tmp/xxl-tools.sh "$(dirname "$0")/xxl-tools.sh"
     chmod +x "$(dirname "$0")/xxl-tools.sh"
     echo "脚本更新成功！"
+    main_menu
 }
 
 # 主菜单函数
@@ -35,14 +36,14 @@ function main_menu() {
     clear
     echo "===================================="
     echo "          XXL Tools 菜单            "
-    echo "               $VERSION              "
+    echo "                  -$VERSION         "
     echo "===================================="
-    echo "0. 退出"
+    echo "0. 退出脚本"
     echo "1. 更新脚本"
-    echo ""
     echo "------------------------------------"
     echo ""
     echo "2. 开启root用户使用密钥登录"
+    echo ""
     echo "===================================="
     read -p "请输入选项编号: " choice
 
