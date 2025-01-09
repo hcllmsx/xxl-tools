@@ -3,13 +3,6 @@
 # 安装路径
 INSTALL_DIR="/usr/local/bin/xxl-tools"
 
-# 检查是否已经安装
-if [[ -d "$INSTALL_DIR" && "$1" != "--force" ]]; then
-    echo "脚本已安装，可以直接通过 'xxlt' 命令运行。"
-    "$INSTALL_DIR/scripts/xxl-tools.sh"
-    exit 0
-fi
-
 # 创建安装目录
 echo "正在创建安装目录..."
 mkdir -p "$INSTALL_DIR"
