@@ -62,11 +62,30 @@ function confirm_enable_root_ssh_key() {
         echo "SSH配置已生效，无需重复设置。"
     fi
 
-    # 输出私钥内容
-    echo "以下是你的私钥内容，请妥善保存："
-    cat /root/.ssh/id_rsa
+    # 获取当前用户名
+    username=$(whoami)
 
-    echo "密钥只显示一次，需要手动复制上面的密钥内容，并保存成 id_rsa 文件。"
+    # 获取服务器IP地址（优先使用IPv4，如果不可用则使用IPv6）
+    ip_address=$(ip -4 addr show scope global | grep inet | awk '{print $2}' | cut -d'/' -f1)
+    if [[ -z "$ip_address" ]]; then
+        ip_address=$(ip -6 addr show scope global | grep inet6 | awk '{print $2}' | cut -d'/' -f1)
+    fi
+
+    # 获取当前时间（时分秒）
+    current_time=$(date +"%H%M%S")
+
+    # 生成文件名
+    key_filename="${username}-${ip_address}-${current_time}.pem"
+
+    # 输出私钥内容
+    echo ""
+    echo "以下是你的私钥内容，请妥善保存："
+    echo ""
+    cat /root/.ssh/id_rsa
+    echo ""
+    echo "密钥只显示一次，需要手动复制上面的密钥内容，并保存成以下文件："
+    echo "$key_filename"
+    echo ""
     read -p "按回车键返回上一级菜单..."
     key_management_menu
 }
