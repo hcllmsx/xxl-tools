@@ -51,8 +51,10 @@ function manage_authorized_keys() {
             echo -e "用户: \e[33m$user\e[0m"
             # 显示公钥指纹
             ssh-keygen -lf "$authorized_keys_file" | awk '{print "公钥指纹: " $2}'
+            echo "------------------------------------"
         else
             echo "用户: $user"
+            echo "------------------------------------"
         fi
     done
 
@@ -67,7 +69,7 @@ function manage_authorized_keys() {
 
     echo "===================================="  # 添加分隔线
     echo "以上是系统中所有用户的用户名"
-    echo "其中已经开启了密钥登录的用户的用户名显示为\e[33m黄色\e[0m"
+    echo -e "其中已经开启了密钥登录的用户的用户名显示为\e[33m黄色\e[0m"
     read -p "按回车键返回上一级菜单或输入 'del' 进入删除模式: " action
 
     if [[ "$action" == "del" ]]; then
@@ -91,6 +93,8 @@ function manage_authorized_keys() {
             key_management_menu
         fi
     elif [[ -z "$action" ]]; then
+        key_management_menu
+    else
         key_management_menu
     fi
 }
