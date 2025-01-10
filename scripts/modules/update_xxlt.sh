@@ -13,7 +13,7 @@ function update_script() {
     # 下载最新脚本文件夹
     curl -sL https://github.com/hcllmsx/xxl-tools/archive/main.tar.gz | tar -xz -C "$INSTALL_DIR" --strip-components=1
     if [[ $? -ne 0 ]]; then
-        echo "下载脚本失败，请检查网络连接。"
+        echo "下载脚本失败，请检查网络连接。或者请切换至root用户再执行操作。"
         exit 1
     fi
 
