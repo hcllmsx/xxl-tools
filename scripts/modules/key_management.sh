@@ -40,6 +40,8 @@ function manage_authorized_keys() {
 
         if [[ -f "$authorized_keys_file" ]]; then
             echo -e "用户: \e[33m$user\e[0m"
+            # 显示公钥指纹
+            ssh-keygen -lf "$authorized_keys_file" | awk '{print "公钥指纹: " $2}'
         else
             echo "用户: $user"
         fi
@@ -48,11 +50,14 @@ function manage_authorized_keys() {
     # 检查 root 用户的公钥
     if [[ -f /root/.ssh/authorized_keys ]]; then
         echo -e "用户: \e[33mroot\e[0m"
+        # 显示公钥指纹
+        ssh-keygen -lf "/root/.ssh/authorized_keys" | awk '{print "公钥指纹: " $2}'
     else
         echo "用户: root"
     fi
 
-    echo "以下是系统中所有用户的用户名"
+    echo "===================================="  # 添加分隔线
+    echo "以上是系统中所有用户的用户名"
     echo "其中已经开启了密钥登录的用户的用户名显示为黄色"
     read -p "按回车键返回上一级菜单或输入 'del' 进入删除模式: " action
 
@@ -67,5 +72,7 @@ function manage_authorized_keys() {
         else
             echo "用户 $del_user 不存在或未开启密钥登录"
         fi
+    elif [[ -z "$action" ]]; then
+        key_management_menu
     fi
 }
