@@ -95,8 +95,6 @@ function manage_authorized_keys() {
     elif [[ -z "$action" ]]; then
         key_management_menu
     else
-        key_management_menu
-    else
         echo "输入错误，2秒后返回上一级菜单..."
         sleep 2
         key_management_menu
