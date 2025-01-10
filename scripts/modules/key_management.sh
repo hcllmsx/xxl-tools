@@ -6,7 +6,7 @@ function key_management_menu() {
     echo "===================================="
     echo "         密钥登录管理菜单           "
     echo "===================================="
-    echo "1. 开启root用户密钥登录"
+    echo "1. 开启当前用户密钥登录"
     echo "2. 查看并管理公钥"
     echo "0. 返回主菜单"
     echo "===================================="
@@ -14,8 +14,8 @@ function key_management_menu() {
 
     case $choice in
         1)
-            load_module "enable_root_ssh"
-            confirm_enable_root_ssh_key
+            load_module "enable_current_user_ssh"
+            manage_current_user_ssh_key
             ;;
         2)
             manage_authorized_keys
