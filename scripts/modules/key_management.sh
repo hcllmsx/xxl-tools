@@ -41,20 +41,38 @@ function key_management_menu() {
 
 # 查看现有公钥
 function view_authorized_keys() {
-    if [[ ! -f ~/.ssh/authorized_keys ]]; then
-        echo "未找到 ~/.ssh/authorized_keys 文件。"
-        return
-    fi
+    # 遍历 /home 目录下的所有用户
+    for user in /home/*; do
+        user=$(basename "$user")
+        authorized_keys_file="/home/$user/.ssh/authorized_keys"
 
-    echo "当前 ~/.ssh/authorized_keys 文件中的公钥："
-    echo "----------------------------------------"
-    while IFS= read -r line; do
-        if [[ "$line" =~ ^ssh- ]]; then
-            echo "公钥: $line"
-            echo "指纹: $(ssh-keygen -lf <(echo "$line"))"
+        if [[ -f "$authorized_keys_file" ]]; then
+            echo "用户: $user"
+            echo "当前 ~/.ssh/authorized_keys 文件中的公钥："
             echo "----------------------------------------"
+            while IFS= read -r line; do
+                if [[ "$line" =~ ^ssh- ]]; then
+                    echo "公钥: $line"
+                    echo "指纹: $(ssh-keygen -lf <(echo "$line"))"
+                    echo "----------------------------------------"
+                fi
+            done < "$authorized_keys_file"
         fi
-    done < ~/.ssh/authorized_keys
+    done
+
+    # 检查 root 用户的公钥
+    if [[ -f /root/.ssh/authorized_keys ]]; then
+        echo "用户: root"
+        echo "当前 ~/.ssh/authorized_keys 文件中的公钥："
+        echo "----------------------------------------"
+        while IFS= read -r line; do
+            if [[ "$line" =~ ^ssh- ]]; then
+                echo "公钥: $line"
+                echo "指纹: $(ssh-keygen -lf <(echo "$line"))"
+                echo "----------------------------------------"
+            fi
+        done < /root/.ssh/authorized_keys
+    fi
 }
 
 # 删除公钥
