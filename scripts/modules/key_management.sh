@@ -33,6 +33,15 @@ function key_management_menu() {
 
 # 查看并管理公钥
 function manage_authorized_keys() {
+    # 检查是否有 root 权限
+    if [ "$(id -u)" -ne 0 ]; then
+        echo "此功能需要 root 权限！"
+        read -n 1 -s -r -p "按任意键返回上级菜单..."
+        echo
+        key_management_menu
+        return
+    fi
+
     # 遍历 /home 目录下的所有用户
     for user in /home/*; do
         user=$(basename "$user")

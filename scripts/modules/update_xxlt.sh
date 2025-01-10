@@ -5,6 +5,7 @@ INSTALL_DIR="/usr/local/bin/xxl-tools"
 
 # 更新脚本函数
 function update_script() {
+    echo "更新脚本需要root权限，如果你没有root权限，则会更新失败！"
     echo "正在更新脚本..."
     
     # 进入安装目录
@@ -13,14 +14,14 @@ function update_script() {
     # 下载最新脚本文件夹
     curl -sL https://github.com/hcllmsx/xxl-tools/archive/main.tar.gz | tar -xz -C "$INSTALL_DIR" --strip-components=1
     if [[ $? -ne 0 ]]; then
-        echo "下载脚本失败，请检查网络连接。或者请切换至root用户再执行操作。"
+        echo "下载脚本失败，请检查网络连接。"
         exit 1
     fi
 
     # 赋予脚本执行权限
     chmod +x "$INSTALL_DIR/scripts/xxl-tools.sh"
     if [[ $? -ne 0 ]]; then
-        echo "赋予执行权限失败，请切换至root用户下操作。"
+        echo "赋予执行权限失败"
         exit 1
     fi
     

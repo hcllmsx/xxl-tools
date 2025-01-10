@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 脚本版本号
-VERSION="v0.0.16"
+VERSION="v0.0.17"
 
 # 安装路径
 INSTALL_DIR="/usr/local/bin/xxl-tools"
