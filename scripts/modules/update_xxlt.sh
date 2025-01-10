@@ -5,7 +5,8 @@ INSTALL_DIR="/usr/local/bin/xxl-tools"
 
 # 更新脚本函数
 function update_script() {
-    echo "更新脚本需要root权限，如果你没有root权限，则会更新失败！"
+    read -n 1 -s -r -p "提示：更新脚本需要root权限！按任意键继续"
+    echo ""
     echo "正在更新脚本..."
     
     # 进入安装目录
@@ -21,7 +22,7 @@ function update_script() {
     # 赋予脚本执行权限
     chmod +x "$INSTALL_DIR/scripts/xxl-tools.sh"
     if [[ $? -ne 0 ]]; then
-        echo "赋予执行权限失败"
+        echo "赋予执行权限失败！"
         exit 1
     fi
     
