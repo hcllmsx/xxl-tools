@@ -5,7 +5,7 @@ INSTALL_DIR="/usr/local/bin/xxl-tools"
 
 # 更新脚本函数
 function update_script() {
-    read -n 1 -s -r -p "提示：更新脚本需要root权限！按任意键继续"
+    read -n 1 -s -r -p "提示：更新脚本需root权限！...按任意键继续..."
     echo ""
     echo "正在更新脚本..."
     

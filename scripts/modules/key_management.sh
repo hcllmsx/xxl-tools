@@ -70,7 +70,7 @@ function manage_authorized_keys() {
     echo "===================================="  # 添加分隔线
     echo "以上是系统中所有用户的用户名"
     echo -e "其中已经开启了密钥登录的用户的用户名显示为\e[33m黄色\e[0m"
-    read -p "按回车键返回上一级菜单或输入 'del' 进入删除模式: " action
+    read -p "按 '回车键' 返回上一级菜单丨输入 'del' 进入删除模式: " action
 
     if [[ "$action" == "del" ]]; then
         read -p "请输入要删除公钥的用户名: " del_user
@@ -95,6 +95,8 @@ function manage_authorized_keys() {
     elif [[ -z "$action" ]]; then
         key_management_menu
     else
+        echo "输入错误，2秒后返回上一级菜单..."
+        sleep 2
         key_management_menu
     fi
 }
