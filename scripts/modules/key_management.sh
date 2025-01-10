@@ -6,7 +6,7 @@ function key_management_menu() {
     echo "===================================="
     echo "         密钥登录管理菜单           "
     echo "===================================="
-    echo "1. 开启当前用户密钥登录"
+    echo "1. 开启密钥登录或更新密钥"
     echo "2. 查看并管理公钥"
     echo "0. 返回主菜单"
     echo "===================================="
@@ -67,19 +67,28 @@ function manage_authorized_keys() {
 
     echo "===================================="  # 添加分隔线
     echo "以上是系统中所有用户的用户名"
-    echo "其中已经开启了密钥登录的用户的用户名显示为黄色"
+    echo "其中已经开启了密钥登录的用户的用户名显示为\e[33m黄色\e[0m"
     read -p "按回车键返回上一级菜单或输入 'del' 进入删除模式: " action
 
     if [[ "$action" == "del" ]]; then
         read -p "请输入要删除公钥的用户名: " del_user
         if [[ -f "/home/$del_user/.ssh/authorized_keys" ]]; then
             rm -f "/home/$del_user/.ssh/authorized_keys"
-            echo "用户 $del_user 的公钥已删除"
+            echo ""
+            read -n 1 -s -r -p "用户 $del_user 的公钥已删除..."
+            echo
+            key_management_menu
         elif [[ "$del_user" == "root" && -f "/root/.ssh/authorized_keys" ]]; then
             rm -f "/root/.ssh/authorized_keys"
-            echo "用户 root 的公钥已删除"
+            echo ""
+            read -n 1 -s -r -p "用户 root 的公钥已删除..."
+            echo
+            key_management_menu
         else
-            echo "用户 $del_user 不存在或未开启密钥登录"
+            echo ""
+            read -n 1 -s -r -p "用户 $del_user 不存在或未开启密钥登录，或你的输入有误..."
+            echo
+            key_management_menu
         fi
     elif [[ -z "$action" ]]; then
         key_management_menu

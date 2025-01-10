@@ -32,7 +32,7 @@ function manage_current_user_ssh_key() {
         esac
     fi
 
-    # 生成SSH密钥对
+    # 生成SSH密钥对并强制覆盖现有文件
     echo "生成SSH密钥对..."
     ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_rsa -N "" -q <<< y
 
@@ -51,14 +51,20 @@ function manage_current_user_ssh_key() {
     # 检查是否已经配置过 SSH
     if ! grep -q "^PermitRootLogin prohibit-password" /etc/ssh/sshd_config; then
         echo "启用root用户通过SSH密钥登录，并禁用密码登录..."
-        sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin prohibit-password/' /etc/ssh/sshd_config
-        sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
+        sudo sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin prohibit-password/' /etc/ssh/sshd_config
+        sudo sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config
     else
         echo "SSH配置已生效，无需重复设置。"
     fi
     
     # 重启SSH服务
-    systemctl restart ssh
+    echo "重启SSH服务..."
+    if sudo systemctl restart ssh; then
+        echo "SSH服务重启成功。"
+    else
+        echo "SSH服务重启失败，请检查系统日志或手动重启。"
+    fi
+
     # 获取当前用户名
     username=$(whoami)
 
